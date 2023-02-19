@@ -33,6 +33,9 @@ export function parseCommand(
     case "anime":
       model = "sdv1/anime.safetensors";
       break;
+    case "pastel":
+      model = "sdv1/pastel.safetensors";
+      break;
     case "inkpunk":
       prompt = "nvinkpunk " + prompt;
       model = "sdv1/Inkpunk-Diffusion-v2.ckpt";

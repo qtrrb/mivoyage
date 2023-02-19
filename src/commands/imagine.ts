@@ -30,7 +30,8 @@ const command: Command = {
         .addChoices(
           { name: "default", value: "default" },
           { name: "inkpunk", value: "inkpunk" },
-          { name: "anime", value: "anime" }
+          { name: "anime", value: "anime" },
+          { name: "pastel", value: "pastel" }
         )
     )
     .addStringOption((option) =>
