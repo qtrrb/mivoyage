@@ -24,6 +24,13 @@ export interface ApiData {
   model: string;
 }
 
+export interface Style {
+  name: string;
+  model: string;
+  prompt: string;
+  negativePrompt: string;
+}
+
 declare module "discord.js" {
   export interface Client {
     commands: Collection<unknown, any>;

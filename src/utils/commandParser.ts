@@ -1,12 +1,14 @@
 import { ApiData } from "../types";
+import { styles } from "./styles";
 
 export function parseCommand(
   prompt: string,
   negativePrompt: string,
   aspectRatio: "1:1" | "3:2" | "2:3",
-  style: string
+  styleName: string
 ): ApiData {
-  let height, width, model;
+  let height, width;
+  let model = styles[0].model;
 
   switch (aspectRatio) {
     case "2:3":
@@ -26,24 +28,16 @@ export function parseCommand(
       width = 512;
       break;
   }
-  switch (style) {
-    case "default":
-      model = "sdv1/1-5.safetensors";
+
+  for (const style of styles) {
+    if (style.name === styleName) {
+      model = style.model;
+      prompt = style.prompt + prompt;
+      negativePrompt = style.negativePrompt + negativePrompt;
       break;
-    case "anime":
-      model = "sdv1/anime.safetensors";
-      break;
-    case "pastel":
-      model = "sdv1/pastel.safetensors";
-      break;
-    case "inkpunk":
-      prompt = "nvinkpunk " + prompt;
-      model = "sdv1/Inkpunk-Diffusion-v2.ckpt";
-      break;
-    default:
-      model = "sdv1/1-5.safetensors";
-      break;
+    }
   }
+
   return {
     prompt: prompt,
     negativePrompt: negativePrompt,
