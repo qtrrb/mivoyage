@@ -5,6 +5,10 @@ const interactionCreate: Event = {
   name: "interactionCreate",
   execute: async (interaction: Interaction) => {
     if (!interaction.isChatInputCommand()) return;
+    if (!interaction.guild) {
+      await interaction.reply("Sorry, commands don't work outside of servers!");
+      return;
+    }
 
     const command = interaction.client.commands.get(interaction.commandName);
 
