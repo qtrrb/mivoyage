@@ -1,12 +1,13 @@
-import { ApiData } from "../types";
+import { ApiDataTxt } from "../types";
+import { ApiDataImg } from "../types";
 import { styles } from "./styles";
 
-export function parseCommand(
+export function parseCommandTxt(
   prompt: string,
   negativePrompt: string,
   aspectRatio: "1:1" | "3:2" | "2:3",
   styleName: string
-): ApiData {
+): ApiDataTxt {
   let height, width;
   let model = styles[0].model;
 
@@ -43,6 +44,31 @@ export function parseCommand(
     negativePrompt: negativePrompt,
     height: height,
     width: width,
+    model: model,
+  };
+}
+
+export function parseCommandImg(
+  prompt: string,
+  negativePrompt: string,
+  imageUrl: string,
+  styleName: string
+): ApiDataImg {
+  let model = styles[0].model;
+
+  for (const style of styles) {
+    if (style.name === styleName) {
+      model = style.model;
+      prompt = style.prompt + prompt;
+      negativePrompt = style.negativePrompt + negativePrompt;
+      break;
+    }
+  }
+
+  return {
+    prompt: prompt,
+    negativePrompt: negativePrompt,
+    imageUrl: imageUrl,
     model: model,
   };
 }

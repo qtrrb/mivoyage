@@ -16,11 +16,18 @@ export interface Event {
   execute: (...args) => void;
 }
 
-export interface ApiData {
+export interface ApiDataTxt {
   prompt: string;
   negativePrompt: string;
   height: number;
   width: number;
+  model: string;
+}
+
+export interface ApiDataImg {
+  prompt: string;
+  negativePrompt: string;
+  imageUrl: string;
   model: string;
 }
 

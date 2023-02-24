@@ -1,19 +1,24 @@
 import { SlashCommandBuilder, AttachmentBuilder } from "discord.js";
-import { Command } from "../types";
-import { ApiDataTxt } from "../types";
-import { generateImage } from "../utils/callApi";
-import { parseCommandTxt } from "../utils/commandParser";
+import { ApiDataImg, Command } from "../types";
+import { varyImage } from "../utils/callApi";
+import { parseCommandImg } from "../utils/commandParser";
 
 let isActive = false;
 
 const command: Command = {
   data: new SlashCommandBuilder()
-    .setName("imagine")
-    .setDescription("generate an image.")
+    .setName("vary")
+    .setDescription("create a variation of an image.")
     .addStringOption((option) =>
       option
         .setName("prompt")
-        .setDescription("The prompt used to generate the image.")
+        .setDescription("The prompt used to change the image.")
+        .setRequired(true)
+    )
+    .addStringOption((option) =>
+      option
+        .setName("image-url")
+        .setDescription("The url of the image.")
         .setRequired(true)
     )
     .addStringOption((option) =>
@@ -33,25 +38,15 @@ const command: Command = {
           { name: "anime", value: "anime" },
           { name: "pastel", value: "pastel" }
         )
-    )
-    .addStringOption((option) =>
-      option
-        .setName("aspect-ratio")
-        .setDescription("The aspect ratio of the image.")
-        .setRequired(false)
-        .addChoices(
-          { name: "1:1", value: "1:1" },
-          { name: "2:3", value: "2:3" },
-          { name: "3:2", value: "3:2" }
-        )
     ),
-
   execute: async (interaction) => {
     if (!isActive) {
       try {
         isActive = true;
         //@ts-ignore
         const prompt = interaction.options.getString("prompt");
+        //@ts-ignore
+        const imageUrl = interaction.options.getString("image-url");
 
         const negativePrompt =
           //@ts-ignore
@@ -61,27 +56,23 @@ const command: Command = {
           //@ts-ignore
           interaction.options.getString("style") ?? "default";
 
-        const aspectRatio =
-          //@ts-ignore
-          interaction.options.getString("aspect-ratio") ?? "1:1";
-
         await interaction.reply("generating...");
 
-        const data: ApiDataTxt = parseCommandTxt(
+        const data: ApiDataImg = parseCommandImg(
           prompt,
           negativePrompt,
-          aspectRatio,
+          imageUrl,
           style
         );
 
-        const image = await generateImage(data);
+        const image = await varyImage(data);
 
         const attachment = new AttachmentBuilder(image, {
           name: "image.png",
         });
 
         await interaction.editReply({
-          content: `generated! ${prompt}`,
+          content: `generated! ${prompt}, a variation of ${imageUrl}`,
           files: [attachment],
         });
         isActive = false;
