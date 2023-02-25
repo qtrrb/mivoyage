@@ -7,6 +7,7 @@ const eventFiles = readdirSync(join(__dirname, "../events"));
 
 export function setEvents(client: Client) {
   for (const file of eventFiles) {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const event: Event = require(`../events/${file}`).default;
     event.once
       ? client.once(event.name, event.execute)

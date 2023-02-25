@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CommandInteraction,
   SlashCommandBuilder,
   Collection,
-  Client,
 } from "discord.js";
 
 export interface Command {

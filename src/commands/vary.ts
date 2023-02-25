@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { SlashCommandBuilder, AttachmentBuilder } from "discord.js";
 import { ApiDataImg, Command } from "../types";
 import { varyImage } from "../utils/callApi";

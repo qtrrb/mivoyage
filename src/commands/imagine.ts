@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { SlashCommandBuilder, AttachmentBuilder } from "discord.js";
 import { Command } from "../types";
 import { ApiDataTxt } from "../types";
