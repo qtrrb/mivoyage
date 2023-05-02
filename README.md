@@ -6,9 +6,7 @@ A discord bot to generate AI images using [stablediffusion-api](https://github.c
 
 ## Roadmap
 
-> **Warning**
->
-> This project is heavily experimental and is subject to changes.
+> **Warning** This project is currently out of date.
 
 - [ ] Upscaling
 - [x] ~~Image to Image~~
